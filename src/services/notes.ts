@@ -1,0 +1,3 @@
+import {supabase} from "@/lib/supabase";
+export async function listNotes(){const {data:{user}}=await supabase.auth.getUser();if(!user)return [];const {data,error}=await supabase.from("notes").select("*").eq("user_id",user.id).order("updated_at",{ascending:false});if(error)throw error;return data;}
+export async function createNote(content:string,noteType:"note"|"brain_dump"="note"){const {data:{user}}=await supabase.auth.getUser();if(!user)throw new Error("You need to be signed in.");const {data,error}=await supabase.from("notes").insert({user_id:user.id,content,note_type:noteType}).select().single();if(error)throw error;return data;}

@@ -1,3 +1,3 @@
-import { supabase } from "@/lib/supabase";
+import {supabase} from "@/lib/supabase";
 export async function getCurrentProfile(){const {data:{user}}=await supabase.auth.getUser();if(!user)return null;const {data,error}=await supabase.from("profiles").select("*").eq("id",user.id).single();if(error)throw error;return data;}
-export async function updateProfile(input:{display_name?:string;username?:string;timezone?:string}){const {data:{user}}=await supabase.auth.getUser();if(!user)throw new Error("You need to be signed in.");const {data,error}=await supabase.from("profiles").update(input).eq("id",user.id).select().single();if(error)throw error;return data;}
+export async function updateProfile(input:{display_name?:string;username?:string;timezone?:string;onboarding_completed?:boolean}){const {data:{user}}=await supabase.auth.getUser();if(!user)throw new Error("You need to be signed in.");const {data,error}=await supabase.from("profiles").update(input).eq("id",user.id).select().single();if(error)throw error;return data;}

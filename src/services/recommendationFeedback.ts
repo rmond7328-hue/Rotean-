@@ -1,0 +1,1 @@
+import {recordBehavior} from "./behavior";export async function recordRecommendationFeedback(title:string,feedback:"accepted"|"rejected"|"ignored",metadata:any={}){return recordBehavior("recommendation_feedback",{title,feedback,...metadata})}

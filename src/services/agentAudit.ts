@@ -1,0 +1,1 @@
+import {supabase} from "@/lib/supabase";export async function logAgentAction(action:any,status:"proposed"|"confirmed"|"completed"|"failed"){const {data:{user}}=await supabase.auth.getUser();if(!user)return;await supabase.from("agent_action_log").insert({user_id:user.id,action_type:action.kind,status,payload:action.payload||{}})}

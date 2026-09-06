@@ -1,0 +1,3 @@
+import {supabase} from "@/lib/supabase";
+export async function getMemories(limit=30){const {data,error}=await supabase.from("memories").select("*").order("importance",{ascending:false}).order("updated_at",{ascending:false}).limit(limit);if(error)throw error;return data||[]}
+export async function remember(content:string,type="fact",importance=5,confidence=1){const {data:{user}}=await supabase.auth.getUser();if(!user)throw new Error("You need to be signed in.");const {data,error}=await supabase.from("memories").insert({user_id:user.id,content:content.trim(),memory_type:type,source:"user",importance,confidence}).select().single();if(error)throw error;return data}

@@ -1,0 +1,1 @@
+export type AgentActionKind="calendar_create"|"calendar_move"|"reminder_create"|"task_complete"|"task_reschedule"|"note_create"|"message_draft";export type AgentAction={id:string;kind:AgentActionKind;title:string;description:string;payload:Record<string,any>;requiresConfirmation:true};export type AgentPlan={summary:string;actions:AgentAction[];createdAt:string};

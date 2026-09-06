@@ -1,0 +1,1 @@
+export type TravelEstimate={minutes:number;mode:"walk"|"drive"|"transit"|"unknown";source:"user"|"provider"};export function addTravelBuffer(start:Date,minutes:number){return new Date(start.getTime()-minutes*60000)}export function needsLeave(now:Date,start:Date,travel:TravelEstimate){return addTravelBuffer(start,travel.minutes).getTime()<=now.getTime()}

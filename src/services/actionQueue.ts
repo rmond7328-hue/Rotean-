@@ -1,0 +1,1 @@
+export type Action={id:string;kind:"complete_task"|"postpone_task";label:string;payload:Record<string,string>};export function requireConfirmation(action:Action){return {requiresConfirmation:true,action};}

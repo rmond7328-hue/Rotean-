@@ -1,0 +1,2 @@
+import {supabase} from "@/lib/supabase";
+export async function askRotean(message:string){const {data:{session}}=await supabase.auth.getSession();if(!session)throw new Error("You need to be signed in.");const res=await fetch((process.env.EXPO_PUBLIC_SUPABASE_URL||"")+"/functions/v1/rotean-chat",{method:"POST",headers:{Authorization:"Bearer "+session.access_token,"Content-Type":"application/json"},body:JSON.stringify({message})});if(!res.ok)throw new Error(await res.text()||"Rotean couldn't respond.");return res.json();}

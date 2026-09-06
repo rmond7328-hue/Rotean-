@@ -1,0 +1,13 @@
+import {useState} from "react";
+import {Alert,Pressable,StyleSheet,Text,TextInput} from "react-native";
+import {router} from "expo-router";
+import {Screen} from "@/components/Screen";
+import {colors,spacing,typography} from "@/theme/tokens";
+import {signInWithEmail,signUpWithEmail} from "@/services/auth";
+
+export default function Auth(){
+ const[mode,setMode]=useState<"sign-in"|"sign-up">("sign-up"); const[name,setName]=useState(""); const[email,setEmail]=useState(""); const[password,setPassword]=useState(""); const[busy,setBusy]=useState(false);
+ async function submit(){if(!email||password.length<6||(mode==="sign-up"&&!name.trim()))return Alert.alert("Almost there","Please complete the fields.");setBusy(true);const r=mode==="sign-up"?await signUpWithEmail(email.trim(),password,name.trim()):await signInWithEmail(email.trim(),password);setBusy(false);if(r.error)return Alert.alert("Couldn't continue",r.error.message);router.replace("/home");}
+ return <Screen><Text style={s.eyebrow}>ROTEAN</Text><Text style={s.title}>{mode==="sign-up"?"Let's make this yours.":"Welcome back."}</Text><Text style={s.body}>{mode==="sign-up"?"A few details now. Rotean learns the rest with you.":"Pick up where you left off."}</Text>{mode==="sign-up"&&<TextInput value={name} onChangeText={setName} placeholder="Your name" style={s.input}/>}<TextInput value={email} onChangeText={setEmail} placeholder="Email" autoCapitalize="none" keyboardType="email-address" style={s.input}/><TextInput value={password} onChangeText={setPassword} placeholder="Password" secureTextEntry style={s.input}/><Pressable disabled={busy} onPress={submit} style={s.button}><Text style={s.buttonText}>{busy?"Working…":mode==="sign-up"?"Create my account":"Sign in"}</Text></Pressable><Pressable onPress={()=>setMode(mode==="sign-up"?"sign-in":"sign-up")}><Text style={s.switch}>{mode==="sign-up"?"Already have an account? Sign in":"New to Rotean? Create an account"}</Text></Pressable></Screen>
+}
+const s=StyleSheet.create({eyebrow:{...typography.label,color:colors.green,marginTop:spacing.xl},title:{...typography.h1,color:colors.ink,marginTop:spacing.md},body:{...typography.body,color:colors.inkMuted,marginVertical:spacing.xl},input:{backgroundColor:colors.surface,borderWidth:1,borderColor:colors.line,borderRadius:14,paddingHorizontal:16,height:54,color:colors.ink,marginBottom:12},button:{height:56,borderRadius:16,backgroundColor:colors.green,alignItems:"center",justifyContent:"center",marginTop:8},buttonText:{...typography.h3,color:colors.white},switch:{...typography.bodySmall,color:colors.green,textAlign:"center",marginTop:20}});

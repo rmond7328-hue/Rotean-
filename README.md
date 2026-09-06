@@ -11,6 +11,10 @@ Rotean is a personal life operating system: it understands your time, responsibi
 - Phase 4 — Real Rotean experience: complete
 - Phase 5 — Action & real-world intelligence: complete
 - Phase 6 — Deep personalization: complete
+- Phase 7 — Agent & actions: complete
+
+## Agent architecture
+The agent plans actions from personal context, requires user confirmation for state-changing operations, executes only supported integrations, and records the lifecycle for auditing. Unsupported integrations are reported rather than simulated.
 
 ## Personalization
 Rotean combines explicit preferences, durable memories and repeated behavioral signals. Routine and energy patterns are treated as soft hints, not facts. Recommendation feedback and user corrections can improve future planning.

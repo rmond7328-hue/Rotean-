@@ -1,5 +1,1 @@
-import { PropsWithChildren } from 'react';
-import { ScrollView,StyleSheet,View } from 'react-native';
-import { colors,spacing } from '@/theme/tokens';
-export function Screen({children}:PropsWithChildren){return <View style={styles.root}><ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>{children}</ScrollView></View>}
-const styles=StyleSheet.create({root:{flex:1,backgroundColor:colors.paper},content:{padding:spacing.xl,paddingBottom:spacing.xxxl}});
+import {PropsWithChildren} from "react";import {KeyboardAvoidingView,Platform,StyleSheet,View} from "react-native";import {colors,spacing} from "@/theme/tokens";export function Screen({children}:{children:React.ReactNode}){return <View style={styles.root}><KeyboardAvoidingView style={styles.flex} behavior={Platform.OS==="ios"?"padding":undefined}>{children}</KeyboardAvoidingView></View>}const styles=StyleSheet.create({root:{flex:1,backgroundColor:colors.paper},flex:{flex:1,paddingHorizontal:spacing.xl,paddingTop:spacing.xl,paddingBottom:spacing.xl}});

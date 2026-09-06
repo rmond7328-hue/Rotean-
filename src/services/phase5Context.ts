@@ -1,0 +1,1 @@
+import {getCurrentLocation} from "./deviceLocation";import {buildContext} from "./context";export async function getEnhancedContext(useLocation=false){const context=await buildContext();if(!useLocation)return context;try{return {...context,location:await getCurrentLocation()}}catch{return {...context,location:null}}}

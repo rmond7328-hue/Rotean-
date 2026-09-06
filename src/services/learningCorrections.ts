@@ -1,0 +1,1 @@
+import {recordBehavior} from "./behavior";export async function correctPattern(pattern:string,correction:string){return recordBehavior("pattern_correction",{pattern,correction})}export async function rateRecommendation(title:string,rating:"helpful"|"not_helpful"){return recordBehavior("recommendation_rating",{title,rating})}

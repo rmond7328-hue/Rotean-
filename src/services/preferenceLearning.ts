@@ -1,0 +1,1 @@
+import {supabase} from "@/lib/supabase";export async function saveLearnedPreference(key:string,value:any,confidence=0.5){const {data:{user}}=await supabase.auth.getUser();if(!user)throw new Error("Sign in first.");const {error}=await supabase.from("user_preferences").upsert({user_id:user.id,[key]:value,learning_confidence:confidence},{onConflict:"user_id"});if(error)throw error}

@@ -1,0 +1,3 @@
+import {supabase} from "@/lib/supabase";
+export async function listEvents(from:string,to:string){const {data:{user}}=await supabase.auth.getUser();if(!user)return [];const {data,error}=await supabase.from("calendar_events").select("*").eq("user_id",user.id).lt("starts_at",to).gt("ends_at",from).order("starts_at",{ascending:true});if(error)throw error;return data;}
+export async function createEvent(title:string,startsAt:string,endsAt:string){const {data:{user}}=await supabase.auth.getUser();if(!user)throw new Error("You need to be signed in.");const {data,error}=await supabase.from("calendar_events").insert({user_id:user.id,title,starts_at:startsAt,ends_at:endsAt}).select().single();if(error)throw error;return data;}

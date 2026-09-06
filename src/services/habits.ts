@@ -1,0 +1,3 @@
+import {supabase} from "@/lib/supabase";
+export async function listHabits(){const {data:{user}}=await supabase.auth.getUser();if(!user)return [];const {data,error}=await supabase.from("habits").select("*").eq("user_id",user.id).eq("active",true).order("created_at",{ascending:false});if(error)throw error;return data;}
+export async function logHabit(habitId:string,status:"completed"|"skipped"|"partial",note?:string){const {data:{user}}=await supabase.auth.getUser();if(!user)throw new Error("You need to be signed in.");const {data,error}=await supabase.from("habit_logs").insert({user_id:user.id,habit_id:habitId,status,note}).select().single();if(error)throw error;return data;}

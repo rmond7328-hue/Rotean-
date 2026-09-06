@@ -1,0 +1,3 @@
+import {supabase} from "@/lib/supabase";
+export async function listGoals(){const {data:{user}}=await supabase.auth.getUser();if(!user)return [];const {data,error}=await supabase.from("goals").select("*").eq("user_id",user.id).order("priority",{ascending:true});if(error)throw error;return data;}
+export async function createGoal(title:string,targetDate?:string){const {data:{user}}=await supabase.auth.getUser();if(!user)throw new Error("You need to be signed in.");const {data,error}=await supabase.from("goals").insert({user_id:user.id,title,target_date:targetDate}).select().single();if(error)throw error;return data;}

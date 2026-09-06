@@ -1,0 +1,5 @@
+import { supabase } from "@/lib/supabase";
+export type TaskInput={title:string;description?:string;priority?:number;estimated_minutes?:number;due_at?:string;energy_level?:"low"|"medium"|"high";project_id?:string;goal_id?:string;parent_task_id?:string};
+export async function listTasks(){const {data:{user}}=await supabase.auth.getUser();if(!user)return [];const {data,error}=await supabase.from("tasks").select("*").eq("user_id",user.id).order("due_at",{ascending:true,nullsFirst:false});if(error)throw error;return data;}
+export async function createTask(input:TaskInput){const {data:{user}}=await supabase.auth.getUser();if(!user)throw new Error("You need to be signed in.");const {data,error}=await supabase.from("tasks").insert({...input,user_id:user.id}).select().single();if(error)throw error;return data;}
+export async function updateTask(id:string,input:Partial<TaskInput>&{status?:"todo"|"in_progress"|"completed"|"cancelled"}){const {data,error}=await supabase.from("tasks").update(input).eq("id",id).select().single();if(error)throw error;return data;}

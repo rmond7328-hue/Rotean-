@@ -1,9 +1,25 @@
 {
   "expo": {
-    "name":"Rotean","slug":"rotean","version":"0.1.0","scheme":"rotean","orientation":"portrait","userInterfaceStyle":"light",
-    "experiments":{"typedRoutes":true},
-    "ios":{"supportsTablet":true},
-    "android":{"adaptiveIcon":{"backgroundColor":"#F7F5EF"}},
-    "plugins":["expo-router","expo-notifications","expo-calendar","expo-location"]
+    "name": "Rotean",
+    "slug": "rotean",
+    "version": "0.1.0",
+    "scheme": "rotean",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
+    "experiments": { "typedRoutes": true },
+    "ios": { "supportsTablet": true },
+    "android": {
+      "package": "com.rotean.app",
+      "versionCode": 1,
+      "adaptiveIcon": { "backgroundColor": "#F7F5EF", "foregroundImage": "./assets/icon.png" },
+      "permissions": ["POST_NOTIFICATIONS", "READ_CALENDAR", "WRITE_CALENDAR", "ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-notifications",
+      "expo-calendar",
+      "expo-location"
+    ]
   }
 }

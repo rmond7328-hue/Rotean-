@@ -3,39 +3,26 @@
 :root {
   --background: #f7f5ef;
   --surface: #ffffff;
+  --surface-subtle: #fbfaf7;
   --ink: #17211b;
   --muted: #69736c;
   --line: #e5e3dc;
   --green: #174d3a;
-  --lime: #c7e86b;
   --green-deep: #0e3428;
+  --lime: #c7e86b;
+  --soft-green: #eef4ed;
+  --danger: #a3473d;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
+html { background: var(--background); scroll-behavior: smooth; }
+body { margin: 0; min-height: 100vh; background: var(--background); color: var(--ink); font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; }
+button, input, textarea, select { font: inherit; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; }
+::selection { background: var(--lime); color: var(--green-deep); }
 
-html {
-  background: var(--background);
+@media (prefers-reduced-motion: no-preference) {
+  .motion-enter { animation: motion-enter .45s ease-out both; }
 }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: var(--background);
-  color: var(--ink);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@keyframes motion-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }

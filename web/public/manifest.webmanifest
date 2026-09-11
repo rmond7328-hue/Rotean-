@@ -1,0 +1,11 @@
+{
+  "name": "Rotean",
+  "short_name": "Rotean",
+  "description": "Your life, intelligently managed.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F5EF",
+  "theme_color": "#F7F5EF",
+  "orientation": "portrait",
+  "icons": []
+}

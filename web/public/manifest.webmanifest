@@ -1,11 +1,13 @@
 {
-  "name": "Rotean",
+  "name": "Rotean — Your life, intelligently managed",
   "short_name": "Rotean",
-  "description": "Your life, intelligently managed.",
-  "start_url": "/",
+  "description": "Rotean understands your time, responsibilities, goals and surroundings, then helps you decide what to do next.",
+  "start_url": "/app",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#F7F5EF",
   "theme_color": "#F7F5EF",
-  "orientation": "portrait",
-  "icons": []
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "categories": ["productivity", "lifestyle"]
 }

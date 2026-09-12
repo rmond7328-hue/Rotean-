@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getRecentBehaviorServer } from "@/lib/intelligence/behavior";
 import { buildPersonalModel } from "@/lib/intelligence/personalModel";
 import { getServerLifeSnapshot } from "@/lib/intelligence/serverSnapshot";
-import { buildWhatsNext } from "@/lib/intelligence/whatsNext";
+import { rankWhatsNext } from "@/lib/intelligence/whatsNextEngine";
 
 export async function GET() {
   try {
@@ -13,7 +13,7 @@ export async function GET() {
     const [snapshot, behavior] = await Promise.all([getServerLifeSnapshot(), getRecentBehaviorServer(200)]);
     if (behavior.error) throw new Error(behavior.error.message);
     const model = buildPersonalModel(snapshot, behavior.data ?? []);
-    return NextResponse.json({ context: { timezone: snapshot.timezone, model_confidence: model.confidence }, result: buildWhatsNext(snapshot, model) });
+    return NextResponse.json({ context: { timezone: snapshot.timezone, model_confidence: model.confidence }, result: rankWhatsNext(snapshot, model) });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : "Unable to decide what is next." }, { status: 500 });
   }

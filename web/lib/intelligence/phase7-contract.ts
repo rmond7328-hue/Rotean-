@@ -49,30 +49,33 @@ export type JarvisContextInput = {
 };
 
 export function createPhase7Context(context: RoteanContext, snapshot?: LifeSnapshot): JarvisContextInput {
-  const life = snapshot ?? {
-    preferences: null,
-    tasks: context.open_tasks,
-    projects: [],
-    goals: context.active_goals,
-    habits: [],
-    notes: [],
-    memories: [],
-    calendar_events: context.upcoming_events,
-  } as LifeSnapshot;
+  const life: JarvisContextInput["life"] = snapshot
+    ? {
+        preferences: snapshot.preferences,
+        tasks: snapshot.tasks,
+        projects: snapshot.projects,
+        goals: snapshot.goals,
+        habits: snapshot.habits,
+        notes: snapshot.notes,
+        memories: snapshot.memories,
+        calendar_events: snapshot.calendar_events,
+      }
+    : {
+        preferences: null,
+        tasks: context.open_tasks,
+        projects: [],
+        goals: context.active_goals,
+        habits: [],
+        notes: [],
+        memories: [],
+        calendar_events: context.upcoming_events,
+      };
+
   return {
     generated_at: context.generated_at,
     now: context.now,
     timezone: context.now.timezone,
     model: context.model,
-    life: {
-      preferences: life.preferences,
-      tasks: life.tasks,
-      projects: life.projects,
-      goals: life.goals,
-      habits: life.habits,
-      notes: life.notes,
-      memories: life.memories,
-      calendar_events: life.calendar_events,
-    },
+    life,
   };
 }

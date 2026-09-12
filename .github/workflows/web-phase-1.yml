@@ -4,7 +4,7 @@ on:
   push:
     branches: [web-phase-1, web-phase-3, web-phase-4, web-phase-5, web-phase-6]
   pull_request:
-    branches: [main, web-phase-1, web-phase-3, web-phase-4, web-phase-5]
+    branches: [main, web-phase-1, web-phase-3, web-phase-4, web-phase-5, web-phase-6]
 
 jobs:
   build-web:

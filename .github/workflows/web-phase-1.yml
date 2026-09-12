@@ -2,9 +2,9 @@ name: Rotean Web CI
 
 on:
   push:
-    branches: [web-phase-1, web-phase-3]
+    branches: [web-phase-1, web-phase-3, web-phase-4]
   pull_request:
-    branches: [main]
+    branches: [main, web-phase-1, web-phase-3]
 
 jobs:
   build-web:

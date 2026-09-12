@@ -1,5 +1,4 @@
-import { createClient as createBrowserClient } from "@/lib/supabase/client";
-import { createClient as createServerClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/client";
 
 export type BehaviorSignal = {
   type: string;
@@ -11,7 +10,7 @@ export type BehaviorSignal = {
 const clampLimit = (limit: number) => Math.min(Math.max(limit, 1), 500);
 
 export async function recordBehavior(signal: BehaviorSignal) {
-  const supabase = createBrowserClient();
+  const supabase = createClient();
   const { data: user } = await supabase.auth.getUser();
   if (!user.user) throw new Error("You need to be signed in.");
   return supabase.from("behavior_signals").insert({
@@ -24,11 +23,6 @@ export async function recordBehavior(signal: BehaviorSignal) {
 }
 
 export async function getRecentBehavior(limit = 200) {
-  const supabase = createBrowserClient();
-  return supabase.from("behavior_signals").select("*").order("occurred_at", { ascending: false }).limit(clampLimit(limit));
-}
-
-export async function getRecentBehaviorServer(limit = 200) {
-  const supabase = await createServerClient();
+  const supabase = createClient();
   return supabase.from("behavior_signals").select("*").order("occurred_at", { ascending: false }).limit(clampLimit(limit));
 }

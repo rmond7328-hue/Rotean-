@@ -1,3 +1,5 @@
+import type { LifeSnapshot } from "@/lib/intelligence/lifeSnapshot";
+import type { PersonalModel } from "@/lib/intelligence/personalModel";
 import type { RoteanContext } from "@/lib/intelligence/context";
 
 /** Phase 7 boundary: AI interprets context; deterministic engines remain authoritative for state and ranking. */
@@ -12,8 +14,20 @@ export type JarvisIntent =
   | "recommend"
   | "unknown";
 
+export type JarvisActionType =
+  | "open_task"
+  | "open_goal"
+  | "open_habit"
+  | "start_focus"
+  | "take_break"
+  | "create_task"
+  | "update_task"
+  | "schedule_event"
+  | "save_memory"
+  | "search";
+
 export type JarvisAction = {
-  type: string;
+  type: JarvisActionType | string;
   label: string;
   requires_confirmation: boolean;
   payload?: Record<string, unknown>;
@@ -26,15 +40,39 @@ export type JarvisResponse = {
   actions: JarvisAction[];
 };
 
-export type JarvisContextInput = Pick<RoteanContext, "generated_at" | "model" | "now" | "upcoming_events" | "open_tasks" | "active_goals">;
+export type JarvisContextInput = {
+  generated_at: string;
+  now: RoteanContext["now"];
+  timezone: string;
+  model: PersonalModel;
+  life: Pick<LifeSnapshot, "preferences" | "tasks" | "projects" | "goals" | "habits" | "notes" | "memories" | "calendar_events">;
+};
 
-export function createPhase7Context(context: RoteanContext): JarvisContextInput {
+export function createPhase7Context(context: RoteanContext, snapshot?: LifeSnapshot): JarvisContextInput {
+  const life = snapshot ?? {
+    preferences: null,
+    tasks: context.open_tasks,
+    projects: [],
+    goals: context.active_goals,
+    habits: [],
+    notes: [],
+    memories: [],
+    calendar_events: context.upcoming_events,
+  } as LifeSnapshot;
   return {
     generated_at: context.generated_at,
-    model: context.model,
     now: context.now,
-    upcoming_events: context.upcoming_events,
-    open_tasks: context.open_tasks,
-    active_goals: context.active_goals,
+    timezone: context.now.timezone,
+    model: context.model,
+    life: {
+      preferences: life.preferences,
+      tasks: life.tasks,
+      projects: life.projects,
+      goals: life.goals,
+      habits: life.habits,
+      notes: life.notes,
+      memories: life.memories,
+      calendar_events: life.calendar_events,
+    },
   };
 }

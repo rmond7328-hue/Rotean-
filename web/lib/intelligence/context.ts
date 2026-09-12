@@ -7,6 +7,6 @@ export type RoteanContext = { generated_at: string; model: PersonalModel; now: {
 export async function getRoteanContext(): Promise<RoteanContext> {
   const [snapshot, behavior] = await Promise.all([getLifeSnapshot(), getRecentBehavior(100)]);
   const model = buildPersonalModel(snapshot, behavior.data ?? []);
-  const timezone = typeof snapshot.preferences?.timezone === "string" ? snapshot.preferences.timezone : Intl.DateTimeFormat().resolvedOptions().timeZone;
-  return { generated_at: new Date().toISOString(), model, now: { iso: new Date().toISOString(), timezone, day_of_week: new Intl.DateTimeFormat("en", { weekday: "long", timeZone: timezone }).format(new Date()) }, upcoming_events: snapshot.calendar_events ?? [], open_tasks: (snapshot.tasks ?? []).filter((t) => t.status !== "completed" && t.status !== "done"), active_goals: (snapshot.goals ?? []).filter((g) => g.status !== "completed") };
+  const timezone = snapshot.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return { generated_at:new Date().toISOString(), model, now:{ iso:new Date().toISOString(), timezone, day_of_week:new Intl.DateTimeFormat("en",{weekday:"long",timeZone:timezone}).format(new Date()) }, upcoming_events:snapshot.calendar_events ?? [], open_tasks:(snapshot.tasks ?? []).filter((t)=>t.status!=="completed"&&t.status!=="done"), active_goals:(snapshot.goals ?? []).filter((g)=>g.status!=="completed"&&g.status!=="done") };
 }

@@ -9,5 +9,8 @@
   "theme_color": "#F7F5EF",
   "orientation": "portrait-primary",
   "lang": "en",
-  "categories": ["productivity", "lifestyle"]
+  "categories": ["productivity", "lifestyle"],
+  "icons": [
+    { "src": "/icons/rotean.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { getRecentBehaviorServer } from "@/lib/intelligence/behavior";
+import { getRecentBehaviorServer } from "@/lib/intelligence/serverBehavior";
 import { buildPersonalModel } from "@/lib/intelligence/personalModel";
 import { getServerLifeSnapshot } from "@/lib/intelligence/serverSnapshot";
 

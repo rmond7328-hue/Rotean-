@@ -1,0 +1,36 @@
+name: Rotean Phase 10 Package
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [web-phase-6]
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Verify web build
+        working-directory: web
+        run: |
+          npm install
+          npm run typecheck
+          npm run build
+
+      - name: Package source
+        run: |
+          rm -rf web/node_modules web/.next
+          zip -r Rotean-phase-10.zip web .github/workflows/web-phase-1.yml .github/workflows/package-phase-10.yml -x '*.DS_Store' '*.git*'
+
+      - name: Upload release package
+        uses: actions/upload-artifact@v4
+        with:
+          name: Rotean-phase-10
+          path: Rotean-phase-10.zip
+          if-no-files-found: error
+          retention-days: 7

@@ -1,8 +1,8 @@
-name: Rotean Web Phase 1
+name: Rotean Web CI
 
 on:
   push:
-    branches: [web-phase-1]
+    branches: [web-phase-1, web-phase-3]
   pull_request:
     branches: [main]
 
@@ -17,6 +17,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
       - run: npm run typecheck
       - run: npm run build
